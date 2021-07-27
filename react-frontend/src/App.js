@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import CreateEmployee from "./routes/CreateEmployee";
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
-import CreateEmployeeComponent from "./components/CreateEmployeeComponent";
-import ViewEmployeeComponent from "./components/ViewEmployeeComponent";
-import ListEmployeeComponent from "./components/ListEmployeeComponent";
+import ViewEmployee from "./routes/ViewEmployee";
+import ListEmployee from "./routes/ListEmployee";
 
 function App() {
   return (
@@ -14,16 +14,10 @@ function App() {
         <HeaderComponent />
         <div className="container">
           <Switch>
-            <Route path="/" exact component={ListEmployeeComponent}></Route>
-            <Route path="/employees" component={ListEmployeeComponent}></Route>
-            <Route
-              path="/add-employee/:id"
-              component={CreateEmployeeComponent}
-            ></Route>
-            <Route
-              path="/view-employee/:id"
-              component={ViewEmployeeComponent}
-            ></Route>
+            <Route path="/" exact component={ListEmployee}></Route>
+            <Route path="/employees" component={ListEmployee}></Route>
+            <Route path="/add-employee/:id" component={CreateEmployee}></Route>
+            <Route path="/view-employee/:id" component={ViewEmployee}></Route>
           </Switch>
         </div>
         <FooterComponent />

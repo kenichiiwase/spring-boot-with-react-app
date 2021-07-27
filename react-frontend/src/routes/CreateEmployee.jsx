@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
 import EmployeeService from "../services/EmployeeService";
 
-function CreateEmployeeComponent(props) {
+function CreateEmployee(props) {
   const id = props.match.params.id;
-  const [employee, setEmployee] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
 
+  // Idが変更されるたびに実施
   useEffect(() => {
-    if (id === "_add") {
-      return;
-    } else {
+    // edit
+    if (id !== "_add") {
       EmployeeService.getEmployeeById(id).then((res) => {
-        setEmployee(res.data);
         setFirstName(res.data.firstName);
         setLastName(res.data.lastName);
         setEmailId(res.data.emailId);
       });
     }
-  }, []);
+  }, [id]);
 
   function changeFirstNameHandler(e) {
     setFirstName(e.target.value);
@@ -36,10 +34,16 @@ function CreateEmployeeComponent(props) {
   function saveOrUpdateEmployee(e) {
     e.preventDefault();
 
-    let employee = {
-      firstName: firstName,
-      lastName: lastName,
-      emailId: emailId,
+    // let employee = {
+    //   firstName: firstName,
+    //   lastName: lastName,
+    //   emailId: emailId,
+    // };
+    // ※可変の時はlet
+    const employee = {
+      firstName,
+      lastName,
+      emailId,
     };
 
     if (id === "_add") {
@@ -74,7 +78,7 @@ function CreateEmployeeComponent(props) {
                     placeholder="First Name"
                     name="firstName"
                     className="form-control"
-                    value={firstName || employee.firstName}
+                    value={firstName}
                     onChange={changeFirstNameHandler}
                   />
                 </div>
@@ -84,7 +88,7 @@ function CreateEmployeeComponent(props) {
                     placeholder="Last Name"
                     name="lastName"
                     className="form-control"
-                    value={lastName || employee.lastName}
+                    value={lastName}
                     onChange={changeLastNameHandler}
                   />
                 </div>
@@ -94,7 +98,7 @@ function CreateEmployeeComponent(props) {
                     placeholder="Email Address"
                     name="emailId"
                     className="form-control"
-                    value={emailId || employee.emailId}
+                    value={emailId}
                     onChange={changeEmailHandler}
                   />
                 </div>
@@ -122,4 +126,4 @@ function CreateEmployeeComponent(props) {
   );
 }
 
-export default CreateEmployeeComponent;
+export default CreateEmployee;
